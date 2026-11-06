@@ -1,0 +1,57 @@
+<header>
+  <div class="wrap hdr">
+    <button type="button" class="ib burger" aria-label="Menu" data-open="menu">{% render 'icon', name: 'menu' %}</button>
+
+    <a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 400 | image_tag: height: 46, loading: 'eager', alt: shop.name, class: 'logo-img' }}
+      {%- else -%}
+        <img class="logo-img" src="{{ 'logo.jpg' | asset_url }}" alt="{{ shop.name | escape }} men's watches" width="85" height="46">
+      {%- endif -%}
+    </a>
+
+    <nav class="desk-nav" aria-label="Primary">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="icons">
+      <button type="button" class="ib" aria-label="Search" data-open="search">{% render 'icon', name: 'search' %}</button>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="ib" href="{{ routes.account_url }}" aria-label="Account">{% render 'icon', name: 'account' %}</a>
+      {%- endif -%}
+      <a class="ib" href="{{ routes.cart_url }}" aria-label="Cart" data-open="cart">
+        {% render 'icon', name: 'cart' %}<span class="cnt" id="cnt">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="ov" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="top"><button type="button" class="ib" data-close aria-label="Close">{% render 'icon', name: 'close' %}</button></div>
+  <nav>
+    {%- for link in linklists[section.settings.menu].links -%}
+      <a href="{{ link.url }}" data-close>{{ link.title }}</a>
+    {%- endfor -%}
+    {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}" data-close>Account</a>{%- endif -%}
+  </nav>
+</div>
+
+<div class="ov" id="search" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="top"><button type="button" class="ib" data-close aria-label="Close">{% render 'icon', name: 'close' %}</button></div>
+  <form action="{{ routes.search_url }}" method="get" role="search">
+    <input type="hidden" name="type" value="product">
+    <input class="sinput" id="sq" type="search" name="q" placeholder="Search watches" autocomplete="off" aria-label="Search">
+  </form>
+  <div class="sres" id="sres"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

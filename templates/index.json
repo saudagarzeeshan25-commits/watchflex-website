@@ -1,0 +1,134 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Men's Watches",
+        "heading": "Time,",
+        "heading_accent": "worn loud.",
+        "text": "Gold, rose gold and steel watches for the modern man. Delivered across India.",
+        "btn1_label": "Shop Watches",
+        "btn2_label": "Why Watch Flex"
+      }
+    },
+    "marquee": {
+      "type": "brand-marquee",
+      "settings": {
+        "words": "Free delivery across India, Cash on Delivery, 7-day returns, New arrivals, UPI · Cards · COD"
+      }
+    },
+    "categories": {
+      "type": "category-bento",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "label": "Collection 01",
+            "title": "Gold & Rose Gold",
+            "big": true
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "label": "Collection 02",
+            "title": "Steel"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "label": "Collection 03",
+            "title": "Sport",
+            "style": "gold"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "eyebrow": "Shop by style",
+        "heading": "Find your flex"
+      }
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Shop",
+        "heading": "New arrivals",
+        "subtext": "Swipe. Tap. Flex. Pay online or on delivery.",
+        "limit": 8,
+        "layout": "rail",
+        "alt_bg": true,
+        "show_all": true
+      }
+    },
+    "why": {
+      "type": "why-us",
+      "blocks": {
+        "w1": {
+          "type": "point",
+          "settings": {
+            "icon": "truck",
+            "title": "Free delivery",
+            "text": "All over India"
+          }
+        },
+        "w2": {
+          "type": "point",
+          "settings": {
+            "icon": "cash",
+            "title": "Cash on Delivery",
+            "text": "Pay when it arrives"
+          }
+        },
+        "w3": {
+          "type": "point",
+          "settings": {
+            "icon": "return",
+            "title": "7-day returns",
+            "text": "Easy exchange"
+          }
+        },
+        "w4": {
+          "type": "point",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure payments",
+            "text": "UPI, cards, net banking"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ],
+      "settings": {
+        "eyebrow": "Why Watch Flex",
+        "heading": "Buy with confidence"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "The Flex List",
+        "heading": "Get 10% off your first watch",
+        "text": "Early drops. Private offers. No spam.",
+        "button": "Join the Flex List"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "categories",
+    "bestsellers",
+    "why",
+    "newsletter"
+  ]
+}

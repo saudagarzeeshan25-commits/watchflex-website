@@ -1,0 +1,26 @@
+<section class="news"><div class="wrap reveal">
+  <div class="eyebrow" style="color:var(--gold-light)">{{ section.settings.eyebrow }}</div>
+  <h2 class="sec-title">{{ section.settings.heading }}</h2>
+  <p style="color:#bbb">{{ section.settings.text }}</p>
+  {%- form 'customer', id: 'nf' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <input type="email" name="contact[email]" required placeholder="Your email" aria-label="Email" autocomplete="email">
+    <button type="submit" class="btn btn-gold btn-block">{{ section.settings.button }}</button>
+    <div class="ok" role="status">
+      {%- if form.posted_successfully? -%}You're on the list. Check your inbox.{%- endif -%}
+    </div>
+  {%- endform -%}
+</div></section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Flex List" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get 10% off your first watch" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Early drops. Private offers. No spam." },
+    { "type": "text", "id": "button", "label": "Button", "default": "Join the Flex List" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

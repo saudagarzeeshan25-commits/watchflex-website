@@ -1,0 +1,55 @@
+<footer>
+  <div class="wrap">
+    <div class="fg">
+      <div>
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 400 | image_tag: height: 70, loading: 'lazy', alt: shop.name }}
+        {%- else -%}
+          <img src="{{ 'logo.jpg' | asset_url }}" alt="{{ shop.name | escape }}" width="129" height="70" loading="lazy">
+        {%- endif -%}
+        <p style="max-width:32ch;font-size:14px">{{ section.settings.tagline }}</p>
+      </div>
+      <div>
+        <h5>{{ section.settings.col1_title }}</h5>
+        {%- for link in linklists[section.settings.col1_menu].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </div>
+      <div>
+        <h5>{{ section.settings.col2_title }}</h5>
+        {%- for link in linklists[section.settings.col2_menu].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </div>
+      <div>
+        <h5>{{ section.settings.col3_title }}</h5>
+        {%- for link in linklists[section.settings.col3_menu].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </div>
+    </div>
+
+    <div class="pay" aria-label="Accepted payments">
+      {%- for type in shop.enabled_payment_types -%}
+        {{ type | payment_type_svg_tag: class: 'pay-icon' }}
+      {%- endfor -%}
+    </div>
+
+    <div class="copy">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}.
+      {%- if settings.social_instagram != blank %} <a href="{{ settings.social_instagram }}" rel="noopener">Instagram</a>{% endif -%}
+      {%- if settings.social_tiktok != blank %} · <a href="{{ settings.social_tiktok }}" rel="noopener">TikTok</a>{% endif -%}
+      {%- if settings.social_youtube != blank %} · <a href="{{ settings.social_youtube }}" rel="noopener">YouTube</a>{% endif -%}
+      {%- if settings.social_facebook != blank %} · <a href="{{ settings.social_facebook }}" rel="noopener">Facebook</a>{% endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Premium men's watches. Time, worn loud." },
+    { "type": "text", "id": "col1_title", "label": "Column 1 title", "default": "Shop" },
+    { "type": "link_list", "id": "col1_menu", "label": "Column 1 menu", "default": "main-menu" },
+    { "type": "text", "id": "col2_title", "label": "Column 2 title", "default": "Help" },
+    { "type": "link_list", "id": "col2_menu", "label": "Column 2 menu", "default": "footer" },
+    { "type": "text", "id": "col3_title", "label": "Column 3 title", "default": "Company" },
+    { "type": "link_list", "id": "col3_menu", "label": "Column 3 menu", "default": "footer" }
+  ]
+}
+{% endschema %}

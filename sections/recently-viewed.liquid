@@ -1,0 +1,16 @@
+<section class="alt" data-recent data-exclude="{% if product %}{{ product.handle }}{% endif %}" hidden>
+  <div class="wrap">
+    <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+    <div class="rail" data-recent-rail style="margin-top:14px"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Recently viewed",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Recently viewed" }
+  ],
+  "presets": [{ "name": "Recently viewed" }]
+}
+{% endschema %}

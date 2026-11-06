@@ -1,0 +1,87 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<section><div class="wrap">
+  <div class="eyebrow">Collection</div>
+  <h1 class="sec-title">{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}<div class="sec-sub">{{ collection.description }}</div>{%- endif -%}
+
+  <div class="toolbar">
+    <button type="button" class="btn btn-line" data-open="filters">Filter</button>
+    <form method="get" class="sortform">
+      <label class="sr" for="SortBy">Sort by</label>
+      <select name="sort_by" id="SortBy" onchange="this.form.submit()">
+        {%- for option in collection.sort_options -%}
+          <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+        {%- endfor -%}
+      </select>
+      {%- for filter in collection.filters -%}
+        {%- for value in filter.active_values -%}<input type="hidden" name="{{ filter.param_name }}" value="{{ value.value }}">{%- endfor -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+          <input type="hidden" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | divided_by: 100.0 }}">
+          <input type="hidden" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | divided_by: 100.0 }}">
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </form>
+  </div>
+
+  {%- if collection.products.size == 0 -%}
+    <p class="empty">No watches match. <a href="{{ collection.url }}" style="text-decoration:underline">Clear filters</a></p>
+  {%- else -%}
+    <div class="grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', card_product: product %}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if paginate.pages > 1 -%}
+    <nav class="pager" aria-label="Pagination">
+      {%- if paginate.previous -%}<a class="btn btn-line" href="{{ paginate.previous.url }}">Previous</a>{%- endif -%}
+      <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+      {%- if paginate.next -%}<a class="btn btn-line" href="{{ paginate.next.url }}">Next</a>{%- endif -%}
+    </nav>
+  {%- endif -%}
+</div></section>
+{%- endpaginate -%}
+
+<aside class="drawer" id="filters" role="dialog" aria-modal="true" aria-label="Filters">
+  <form method="get" class="filterform">
+    <div class="dh"><h3>Filter</h3><button type="button" class="ib" data-close aria-label="Close filters">{% render 'icon', name: 'close' %}</button></div>
+    <div class="items">
+      <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+      {%- for filter in collection.filters -%}
+        <fieldset class="fset">
+          <legend>{{ filter.label }}</legend>
+          {%- case filter.type -%}
+            {%- when 'price_range' -%}
+              <div class="prange">
+                <input type="number" name="{{ filter.min_value.param_name }}" placeholder="Min" min="0" inputmode="numeric" value="{% if filter.min_value.value %}{{ filter.min_value.value | divided_by: 100.0 }}{% endif %}">
+                <input type="number" name="{{ filter.max_value.param_name }}" placeholder="Max" min="0" inputmode="numeric" value="{% if filter.max_value.value %}{{ filter.max_value.value | divided_by: 100.0 }}{% endif %}">
+              </div>
+            {%- else -%}
+              {%- for value in filter.values -%}
+                <label class="chk{% if value.count == 0 and value.active == false %} dim{% endif %}">
+                  <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if value.count == 0 and value.active == false %} disabled{% endif %}>
+                  <span>{{ value.label }} <small>({{ value.count }})</small></span>
+                </label>
+              {%- endfor -%}
+          {%- endcase -%}
+        </fieldset>
+      {%- endfor -%}
+    </div>
+    <div class="df">
+      <button type="submit" class="btn btn-gold btn-block">Show results</button>
+      <a class="btn btn-line btn-block" style="margin-top:8px" href="{{ collection.url }}">Clear all</a>
+    </div>
+  </form>
+</aside>
+
+{% schema %}
+{
+  "name": "Collection page",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

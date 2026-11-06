@@ -1,0 +1,17 @@
+{
+  "current": {
+    "color_bg": "#FFFFFF",
+    "color_bg_alt": "#F6F5F2",
+    "color_text": "#0A0A0B",
+    "color_gold": "#B8893B",
+    "color_gold_light": "#C9A96E",
+    "color_gold_deep": "#8F6B22",
+    "color_dark": "#0A0A0B",
+    "heading_font_name": "Playfair Display",
+    "body_font_name": "Manrope",
+    "cart_note": "Free delivery across India · Cash on Delivery available",
+    "whatsapp_number": "",
+    "popup_enabled": true,
+    "popup_delay": 9
+  }
+}

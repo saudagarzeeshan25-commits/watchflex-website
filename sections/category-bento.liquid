@@ -1,0 +1,55 @@
+<section id="cats"><div class="wrap">
+  <div class="eyebrow reveal">{{ section.settings.eyebrow }}</div>
+  <h2 class="sec-title reveal">{{ section.settings.heading }}</h2>
+  <div class="bento reveal">
+    {%- for block in section.blocks -%}
+      <a class="tile {% if block.settings.big %}big{% endif %} {% if block.settings.style == 'gold' %}gold{% endif %}" href="{{ block.settings.link | default: routes.collections_url }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <div class="art">{{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', alt: block.settings.title }}</div>
+        {%- endif -%}
+        <span>{{ block.settings.label }}</span>
+        <h3>{{ block.settings.title }}</h3>
+      </a>
+    {%- endfor -%}
+  </div>
+</div></section>
+
+{% schema %}
+{
+  "name": "Category bento grid",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by style" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your flex" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Small label", "default": "Collection" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Luxury" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "image_picker", "id": "image", "label": "Image (transparent PNG works best)" },
+        { "type": "checkbox", "id": "big", "label": "Large tile (dark)", "default": false },
+        { "type": "select", "id": "style", "label": "Style", "default": "white", "options": [
+          { "value": "white", "label": "White" },
+          { "value": "gold", "label": "Gold" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category bento grid",
+      "blocks": [
+        { "type": "tile", "settings": { "label": "Collection 01", "title": "Luxury", "big": true } },
+        { "type": "tile", "settings": { "label": "Collection 02", "title": "Sport & Rugged" } },
+        { "type": "tile", "settings": { "label": "Collection 03", "title": "Minimalist", "style": "gold" } },
+        { "type": "tile", "settings": { "label": "Collection 04", "title": "Gifts for Him", "style": "gold" } },
+        { "type": "tile", "settings": { "label": "New", "title": "All Watches" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

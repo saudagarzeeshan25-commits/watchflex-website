@@ -1,0 +1,46 @@
+{%- comment -%} Usage: {% render 'product-card', card_product: product %} {%- endcomment -%}
+{%- liquid
+  assign p = card_product
+  assign img1 = p.featured_media
+  assign img2 = p.media[1]
+-%}
+<article class="card" data-handle="{{ p.handle }}">
+  {%- if p.compare_at_price > p.price -%}
+    <span class="badge">{{ p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price }}% OFF</span>
+  {%- elsif p.tags contains 'new' -%}
+    <span class="badge">New</span>
+  {%- endif -%}
+  <button type="button" class="heart" aria-label="Add {{ p.title | escape }} to wishlist" data-heart="{{ p.handle }}">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-9-9a5 5 0 019-3 5 5 0 019 3c-2 4.6-9 9-9 9z"/></svg>
+  </button>
+  <a href="{{ p.url }}" class="img" aria-label="{{ p.title | escape }}">
+    {%- if img1 -%}
+      <div class="a">{{ img1 | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 900px) 25vw, 72vw', alt: img1.alt | default: p.title }}</div>
+    {%- else -%}
+      <div class="a">{{ 'product-1' | placeholder_svg_tag }}</div>
+    {%- endif -%}
+    {%- if img2 -%}
+      <div class="b">{{ img2 | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 900px) 25vw, 72vw', alt: img2.alt | default: p.title }}</div>
+    {%- endif -%}
+  </a>
+  <div class="info">
+    <div class="br">{{ p.vendor }}</div>
+    <h4><a href="{{ p.url }}">{{ p.title }}</a></h4>
+    <div class="price">
+      {{ p.price | money_without_trailing_zeros }}
+      {%- if p.compare_at_price > p.price %} <s>{{ p.compare_at_price | money_without_trailing_zeros }}</s>{% endif -%}
+    </div>
+    {%- if p.available -%}
+      {%- if p.variants.size > 1 -%}
+        <a class="qa" href="{{ p.url }}">Choose options</a>
+      {%- else -%}
+        {%- form 'product', p, data-ajax: 'true' -%}
+          <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+          <button class="qa" type="submit">Quick add</button>
+        {%- endform -%}
+      {%- endif -%}
+    {%- else -%}
+      <button class="qa" type="button" disabled>Sold out</button>
+    {%- endif -%}
+  </div>
+</article>

@@ -1,0 +1,19 @@
+{%- assign words = section.settings.words | split: ',' -%}
+<div class="marq" aria-label="{{ section.settings.aria | escape }}">
+  <div class="mtrack">
+    {%- for i in (1..8) -%}
+      {%- for w in words -%}<span>{{ w | strip | upcase }} <b>&middot;</b></span>{%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brand marquee",
+  "settings": [
+    { "type": "text", "id": "words", "label": "Words (comma separated)", "info": "Only list brands you are authorized to sell.", "default": "Swiss-style, Ceramic, Diver, Rugged, Chrono, Automatic, Limited drops" },
+    { "type": "text", "id": "aria", "label": "Accessible label", "default": "Watch styles" }
+  ],
+  "presets": [{ "name": "Brand marquee" }]
+}
+{% endschema %}

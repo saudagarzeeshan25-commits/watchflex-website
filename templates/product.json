@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-product", "settings": {} },
+    "recent": { "type": "recently-viewed", "settings": { "eyebrow": "Recently viewed" } }
+  },
+  "order": ["main", "recent"]
+}

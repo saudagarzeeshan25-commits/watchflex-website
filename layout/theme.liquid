@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="{{ settings.color_dark }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="icon" type="image/png" href="{% if settings.favicon != blank %}{{ settings.favicon | image_url: width: 96 }}{% else %}{{ 'favicon.png' | asset_url }}{% endif %}">
+
+  <title>{{ page_title }}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  {%- if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif -%}
+  {% render 'meta-tags' %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={{ settings.heading_font_name | url_encode }}:wght@500;600;700;800&family={{ settings.body_font_name | url_encode }}:wght@400;500;600;700;800&display=swap">
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  <style>
+    :root{
+      --bg:{{ settings.color_bg }};
+      --bg-alt:{{ settings.color_bg_alt }};
+      --ink:{{ settings.color_text }};
+      --gold:{{ settings.color_gold }};
+      --gold-light:{{ settings.color_gold_light }};
+      --gold-deep:{{ settings.color_gold_deep }};
+      --dark:{{ settings.color_dark }};
+      --font-display:"{{ settings.heading_font_name }}",Georgia,serif;
+      --font-ui:"{{ settings.body_font_name }}",system-ui,sans-serif;
+    }
+  </style>
+
+  <script>
+    window.WF = {
+      routes: {
+        root: {{ routes.root_url | json }},
+        cartAdd: {{ routes.cart_add_url | json }},
+        cartChange: {{ routes.cart_change_url | json }},
+        cart: {{ routes.cart_url | json }},
+        suggest: {{ routes.predictive_search_url | json }}
+      },
+      currency: {{ cart.currency.iso_code | json }},
+      popupDelay: {{ settings.popup_delay | default: 9 | json }},
+      popupOn: {{ settings.popup_enabled | json }}
+    };
+  </script>
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+  {{ content_for_header }}
+</head>
+<body class="template-{{ template.name }}">
+  <a class="skip" href="#main">Skip to content</a>
+
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+
+  <main id="main" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+  {% section 'cart-drawer' %}
+  {% section 'popup' %}
+
+  <div class="scrim" id="scrim"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<section id="why" class="alt"><div class="wrap">
+  <div class="eyebrow reveal">{{ section.settings.eyebrow }}</div>
+  <h2 class="sec-title reveal">{{ section.settings.heading }}</h2>
+  <div class="why reveal" style="margin-top:22px">
+    {%- for block in section.blocks -%}
+      <div {{ block.shopify_attributes }}>
+        {% render 'icon', name: block.settings.icon %}
+        <b>{{ block.settings.title }}</b>
+        <small>{{ block.settings.text }}</small>
+      </div>
+    {%- endfor -%}
+  </div>
+</div></section>
+
+{% schema %}
+{
+  "name": "Why us",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Watch Flex" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Buy with confidence" }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "shield", "options": [
+          { "value": "shield", "label": "Shield" },
+          { "value": "clock", "label": "Clock" },
+          { "value": "return", "label": "Returns" },
+          { "value": "lock", "label": "Lock" },
+          { "value": "truck", "label": "Delivery" },
+          { "value": "cash", "label": "Cash" }
+        ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "Free delivery" },
+        { "type": "text", "id": "text", "label": "Text", "default": "All over India" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why us",
+      "blocks": [
+        { "type": "point", "settings": { "icon": "truck", "title": "Free delivery", "text": "All over India" } },
+        { "type": "point", "settings": { "icon": "cash", "title": "Cash on Delivery", "text": "Pay when it arrives" } },
+        { "type": "point", "settings": { "icon": "return", "title": "7-day returns", "text": "Easy exchange" } },
+        { "type": "point", "settings": { "icon": "lock", "title": "Secure payments", "text": "UPI, cards, net banking" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

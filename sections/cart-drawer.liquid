@@ -1,0 +1,44 @@
+<aside class="drawer" id="cart" role="dialog" aria-modal="true" aria-label="Cart">
+  <div class="dh">
+    <h3>Your cart</h3>
+    <button type="button" class="ib" data-close aria-label="Close cart">{% render 'icon', name: 'close' %}</button>
+  </div>
+
+  <div class="ship">🚚 {{ settings.cart_note }}</div>
+
+  <div class="items">
+    {%- if cart.item_count == 0 -%}
+      <div class="empty">Your cart is empty.<br>Time to flex.</div>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="li">
+          {%- if item.image -%}{{ item.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: item.product.title }}{%- endif -%}
+          <div class="t">
+            <b>{{ item.product.title }}</b>
+            {%- unless item.product.has_only_default_variant -%}<small>{{ item.variant.title }}</small><br>{%- endunless -%}
+            {{ item.final_price | money_without_trailing_zeros }}
+            <div class="qty">
+              <button type="button" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="Decrease quantity">&minus;</button>
+              <span>{{ item.quantity }}</span>
+              <button type="button" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  <div class="df">
+    <div class="sub"><span>Subtotal</span><span>{{ cart.total_price | money_without_trailing_zeros }}</span></div>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="btn btn-gold btn-block"{% if cart.item_count == 0 %} disabled{% endif %}>Checkout</button>
+    </form>
+    <p class="note">Pay by UPI, cards, net banking or COD at checkout</p>
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Cart drawer"
+}
+{% endschema %}
